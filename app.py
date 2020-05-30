@@ -39,5 +39,5 @@ def index():
 
 
 if __name__ == '__main__':
-    model = load_model('weights2.h5')
+    model = load_model('weights.h5')
     app.run(debug=True)
