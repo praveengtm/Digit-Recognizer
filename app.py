@@ -6,6 +6,7 @@ import tensorflow as tf
 from werkzeug.utils import secure_filename
 from keras.preprocessing import image
 from keras.applications.imagenet_utils import preprocess_input
+import PIL.ImageOps    
 
 OUTPUT_DIR = 'Images'
 
@@ -13,7 +14,8 @@ app = Flask(__name__)
 
 def model_predict(img_path, model):
     img = image.load_img(img_path, target_size=(28, 28), color_mode="grayscale")
-    x = np.reshape(img, (1,784))
+    inverted_image = PIL.ImageOps.invert(img)
+    x = np.reshape(inverted_image, (1,28,28,1))
     preds = model.predict(x)
     return preds
 
@@ -37,5 +39,5 @@ def index():
 
 
 if __name__ == '__main__':
-    model = load_model('weights.h5')
+    model = load_model('weights2.h5')
     app.run(debug=True)
